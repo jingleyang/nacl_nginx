@@ -1,0 +1,33 @@
+NACL_ROOT="/home/yjy/project/nacl_root"
+NACL_PLAT="x86-64"
+NACL_PLAT_LIB="x86_64"
+NACL_LIBPATH="$NACL_ROOT/native_client/scons-out/opt-linux-$NACL_PLAT/lib"
+NACL_LIBS="-L$NACL_LIBPATH \
+    -lsel \
+    -lnacl_error_code \
+    -lenv_cleanser \
+    -lsimple_service \
+    -lthread_interface \
+    -lnonnacl_srpc \
+    -lnrd_xfer \
+    -lnacl_perf_counter \
+    -lnacl_base \
+    -limc \
+    -lnacl_fault_inject \
+    -lnacl_interval \
+    -lplatform_qual_lib \
+    -lvalidators \
+    -ldfa_validate_caller_$NACL_PLAT_LIB \
+    -lcpu_features \
+    -lvalidation_cache \
+    -lplatform \
+    -lgio \
+    -lnccopy_$NACL_PLAT_LIB \
+    -lrt "
+
+CORE_LIBS="$CORE_LIBS $NACL_LIBS"
+CFLAGS="$CFLAGS -std=c99 -I$NACL_ROOT -I$ngx_addon_dir -pthread"
+
+ngx_addon_name=ngx_http_hello_world_module
+HTTP_MODULES="$HTTP_MODULES ngx_http_hello_world_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ngx_http_hello_world_module.c $ngx_addon_dir/nacl_loader.c"
